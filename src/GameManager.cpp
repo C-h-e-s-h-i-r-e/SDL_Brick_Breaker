@@ -44,6 +44,12 @@ GameManager::GameManager(Window* window):
     std::string buffPickUpPath = resPath + PATH_SEP + "buff.wav";
     buffPickUpSound = Mix_LoadWAV(buffPickUpPath.c_str());
 
+    std::string debuffPickUpPath = resPath + PATH_SEP + "debuff.wav";
+    debuffPickUpSound = Mix_LoadWAV(debuffPickUpPath.c_str());
+
+    std::string hearthbuffPickUpPath = resPath + PATH_SEP + "hearth_buff.wav";
+    hearthbuffPickUpSound = Mix_LoadWAV(hearthbuffPickUpPath.c_str());
+
     showMessage = false;
     message = "";
 }
@@ -323,7 +329,7 @@ void GameManager::gameTick()
             paddle->setMoveRate(6);
             mod->remove();
             powerUpActive = true;
-            Mix_PlayChannel(-1, buffPickUpSound, 0);
+            Mix_PlayChannel(-1, debuffPickUpSound, 0);
         }
     }
 
@@ -349,7 +355,7 @@ void GameManager::gameTick()
             paddle->setTexture("small_paddle.png");
             mod->remove();
             powerUpActive = true;
-            Mix_PlayChannel(-1, buffPickUpSound, 0);
+            Mix_PlayChannel(-1, debuffPickUpSound, 0);
         }
     }
 
@@ -362,7 +368,7 @@ void GameManager::gameTick()
             ball->setLives(ball->getLives()+1);
             bonus_life->remove();
             powerUpActive = true;
-            Mix_PlayChannel(-1, buffPickUpSound, 0);
+            Mix_PlayChannel(-1, hearthbuffPickUpSound, 0);
         }
     }
 

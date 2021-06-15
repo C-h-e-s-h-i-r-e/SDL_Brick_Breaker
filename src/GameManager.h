@@ -60,6 +60,8 @@ class GameManager
         Mix_Chunk* ballHitSound = NULL;
         Mix_Chunk* brickBreakSound = NULL;
         Mix_Chunk* buffPickUpSound = NULL;
+        Mix_Chunk* debuffPickUpSound = NULL;
+        Mix_Chunk* hearthbuffPickUpSound = NULL;
 
         bool powerUpActive;
 
