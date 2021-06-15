@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "GameManager.h"
+#include "Window.h"
 
 class Menu
 {

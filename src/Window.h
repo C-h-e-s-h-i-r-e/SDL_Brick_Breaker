@@ -55,6 +55,8 @@ class Window
         SDL_Window* window;
         SDL_Renderer* renderer;
 
+        Mix_Music* music;
+
         int width;
         int height;
         int maxFps;

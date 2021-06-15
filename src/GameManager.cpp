@@ -8,8 +8,6 @@
 #include "Timer.h"
 #include "levelLoader.h"
 
-
-
 GameManager::GameManager(Window* window):
     window(window)
 {
@@ -30,6 +28,8 @@ GameManager::GameManager(Window* window):
     maxBricks = 0;
     totalBricksDestroyed = 0;
 
+    volume_level = 128;
+
     powerupTimer = 9999;
     powerUpActive = false;
 
@@ -40,6 +40,9 @@ GameManager::GameManager(Window* window):
 
     std::string brickBreakSoundPath = resPath + PATH_SEP + "brick.wav";
     brickBreakSound = Mix_LoadWAV(brickBreakSoundPath.c_str());
+
+    std::string buffPickUpPath = resPath + PATH_SEP + "buff.wav";
+    buffPickUpSound = Mix_LoadWAV(buffPickUpPath.c_str());
 
     showMessage = false;
     message = "";
@@ -116,7 +119,7 @@ void GameManager::runGame()
 {
     Menu mainMenu(this);
     mainMenu.addEntry(" Play ");
-    mainMenu.addEntry(" Levels ");
+    mainMenu.addEntry(" Volume ");
     mainMenu.addEntry(" How to Play ");
     mainMenu.addEntry(" Creator ");
     mainMenu.addEntry(" Exit ");
@@ -133,8 +136,6 @@ void GameManager::runGame()
 
         capTimer.start();
 
-        
-
         switch (currentState)
         {
         case STATE_MENU:
@@ -143,7 +144,7 @@ void GameManager::runGame()
             mainMenu.tick();
             break;
         }
-        case STATE_LEVELS:
+        case STATE_VOLUME:
         {
             window->renderTexture(bgTexture, 0, 0);
             printLevels();
@@ -309,6 +310,7 @@ void GameManager::gameTick()
             paddle->setMoveRate(10);
             mod->remove();
             powerUpActive = true;
+            Mix_PlayChannel(-1, buffPickUpSound, 0);
         }
     }
 
@@ -321,6 +323,7 @@ void GameManager::gameTick()
             paddle->setMoveRate(6);
             mod->remove();
             powerUpActive = true;
+            Mix_PlayChannel(-1, buffPickUpSound, 0);
         }
     }
 
@@ -333,6 +336,7 @@ void GameManager::gameTick()
             paddle->setTexture("big_paddle.png");
             mod->remove();
             powerUpActive = true;
+            Mix_PlayChannel(-1, buffPickUpSound, 0);
         }
     }
 
@@ -345,6 +349,7 @@ void GameManager::gameTick()
             paddle->setTexture("small_paddle.png");
             mod->remove();
             powerUpActive = true;
+            Mix_PlayChannel(-1, buffPickUpSound, 0);
         }
     }
 
@@ -357,6 +362,7 @@ void GameManager::gameTick()
             ball->setLives(ball->getLives()+1);
             bonus_life->remove();
             powerUpActive = true;
+            Mix_PlayChannel(-1, buffPickUpSound, 0);
         }
     }
 
@@ -414,11 +420,78 @@ void GameManager::setState(int state)
 
 void GameManager::printLevels()
 {
-    window->renderCenteredText(" Level 1 ", 100, { 0, 0, 0 }, 45, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" Level 2 ", 175, { 0, 0, 0 }, 45, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" Level 3 ", 250, { 0, 0, 0 }, 45, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" Level 4 ", 325, { 0, 0, 0 }, 45, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" Level 5 ", 400, { 0, 0, 0 }, 45, FONT_RENDER_SHADED, {240, 240, 240});
+
+    window->renderCenteredText(" Music Volume Controll ", 50, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {240, 240, 240});
+    window->renderCenteredText(" ----- ", 175, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+    window->renderCenteredText(" Press '9' to 'Pause' or 'Play' ", 250, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+    window->renderCenteredText(" Press '0' to 'Stop' ", 325, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+    window->renderCenteredText(" Press '-' and '+' to change volume ", 400, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+
+            std::string resPath = "res";
+    std::string filePath = "";
+    filePath = resPath + PATH_SEP + "bmusic.wav";
+
+    Mix_Music* music = Mix_LoadMUS(filePath.c_str());
+
+    SDL_Event currEvent;
+    bool repeatKey = SDL_PollEvent(&currEvent) == 1;
+    
+    switch (currEvent.type)
+    {
+    case SDL_QUIT:
+        quit();
+        return;
+    case SDL_KEYDOWN:
+        if (repeatKey)
+        {
+            switch (currEvent.key.keysym.sym)
+            {
+            case SDLK_ESCAPE:
+                if (repeatKey)
+                    {
+                        setState(STATE_MENU);
+                        return;
+                    }
+            case SDLK_9:
+				if( Mix_PlayingMusic() == 0 )
+				    {
+					    Mix_PlayMusic( music, -1 );
+					}
+				else
+					{
+				        if( Mix_PausedMusic() == 1 )
+						    {
+								Mix_ResumeMusic();
+							}
+						else
+							{
+							Mix_PauseMusic();
+							}
+						}
+						break;
+							
+			case SDLK_0:
+			    Mix_HaltMusic();
+				break;
+            case SDLK_MINUS:
+                volume_level = volume_level - 8;
+                if(volume_level < 0){
+                    volume_level = 0;
+                }
+			    Mix_VolumeMusic(volume_level);
+				break;
+            case SDLK_EQUALS:
+			    volume_level = volume_level + 8;
+                 if(volume_level > 128){
+                    volume_level = 128;
+                }
+			    Mix_VolumeMusic(volume_level);
+				break;
+            
+            }
+        }
+        break;
+    }
 }
 
 void GameManager::printC()
@@ -443,6 +516,7 @@ void GameManager::printHow()
 
 void GameManager::listenForQuit()
 {
+
     SDL_Event currEvent;
     bool repeatKey = SDL_PollEvent(&currEvent) == 1;
     

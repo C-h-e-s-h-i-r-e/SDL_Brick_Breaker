@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Window.h"
 
 Menu::Menu(GameManager* mgr) :
 manager(mgr)
@@ -30,7 +31,7 @@ void Menu::tick()
                     manager->initGame(true);
                     return;
                 case 1:
-                    manager->setState(STATE_LEVELS);
+                    manager->setState(STATE_VOLUME);
                     break;
                 case 2:
                     manager->setState(STATE_HOWTOPLAY);
@@ -53,6 +54,7 @@ void Menu::tick()
                 if (activeIndex > menuEntries.size() - 1)
                     activeIndex = 0;
                 break;
+
             }
         }
         break;

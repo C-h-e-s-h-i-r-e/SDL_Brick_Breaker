@@ -16,7 +16,7 @@ enum GameState
     STATE_WINNER = 2,
     STATE_HOWTOPLAY = 3,
     STATE_CREDITS = 4,
-    STATE_LEVELS = 5
+    STATE_VOLUME = 5
 };
 
 class GameManager
@@ -59,6 +59,7 @@ class GameManager
 
         Mix_Chunk* ballHitSound = NULL;
         Mix_Chunk* brickBreakSound = NULL;
+        Mix_Chunk* buffPickUpSound = NULL;
 
         bool powerUpActive;
 
@@ -67,6 +68,8 @@ class GameManager
         int randPos;
         int downNum;
         int upNum;
+
+        int volume_level;
 
         bool isPressed = false;
 		int currentLevel;
