@@ -82,6 +82,8 @@ class GameManager
 
         int remainingLives;
 
+        int fps;
+
         bool levelOver;
 
         int calcScore();

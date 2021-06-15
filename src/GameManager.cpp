@@ -1,6 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include <array>
+#include <string>
 #include "Brick.h"
 #include "GameManager.h"
 #include "Menu.h"
@@ -187,14 +188,26 @@ void GameManager::runGame()
         if (capTimer.getTicks() < (1000 / window->getMaxFps()))
         {
             int waitTime = (1000 / window->getMaxFps()) - capTimer.getTicks();
-            SDL_Delay(waitTime);
+            SDL_Delay(waitTime);   
         }
+
+            float avgFPS = frameCount / ( fpsTimer.getTicks() / 1000.f );
+				if( avgFPS > 2000000 )
+				{
+					avgFPS = 0;
+				}
+
+            std::string title = "Break Braker | FPS: " + std::to_string((avgFPS));
+            window->updateWindow(title.c_str());
+            
     }
 }
 
 void GameManager::gameTick()
 {
     bool repeatKey = SDL_PollEvent(&event) == 1;
+
+
 
     if (levelOver)
     {
@@ -381,6 +394,7 @@ void GameManager::gameTick()
     ball->update();
     window->renderText("Lives: " + std::to_string(ball->getLives()), 5, 0, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
     window->renderText("Score: " + std::to_string(calcScore()), 5, 30, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
+    window->renderText("Level: " + std::to_string(currentLevel), 5, 445, { 0, 0, 0 }, 25, FONT_RENDER_BLENDED, { 0, 0, 0 });
 
     if (bricksLeft == 0)
     {

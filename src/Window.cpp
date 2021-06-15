@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include "Window.h"
 
+//Mix_Music *gMusic = NULL;
+
 Window::Window(const std::string& title, int width, int height, int fps)
 {
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -20,19 +22,72 @@ Window::Window(const std::string& title, int width, int height, int fps)
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024);
+    // Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 );
 
-    std::string resPath = "res";
-    std::string filePath = "";
-    filePath = resPath + PATH_SEP + "bmusic.wav";
+    // gMusic = Mix_LoadMUS( "src/bmusic.wav" );
 
-    Mix_Music* music = Mix_LoadMUS(filePath.c_str());
+    // Mix_FreeMusic( gMusic );
+	// gMusic = NULL;
 
-    if (!music)
-        printf("Mix_LoadMUS(\"bmusic.wav\"): %s\n", Mix_GetError());
+    // SDL_Event e;
 
-    Mix_PlayMusic(music, -1);
-    Mix_FreeMusic(music);
+    // 				while( SDL_PollEvent( &e ) != 0 )
+	// 			{
+	// 				//Handle key press
+	// 				if( e.type == SDL_KEYDOWN )
+	// 				{
+	// 					switch( e.key.keysym.sym )
+	// 					{
+	// 						case SDLK_9:
+	// 						//If there is no music playing
+	// 						if( Mix_PlayingMusic() == 0 )
+	// 						{
+	// 							//Play the music
+	// 							Mix_PlayMusic( gMusic, -1 );
+	// 						}
+	// 						//If music is being played
+	// 						else
+	// 						{
+	// 							//If the music is paused
+	// 							if( Mix_PausedMusic() == 1 )
+	// 							{
+	// 								//Resume the music
+	// 								Mix_ResumeMusic();
+	// 							}
+	// 							//If the music is playing
+	// 							else
+	// 							{
+	// 								//Pause the music
+	// 								Mix_PauseMusic();
+	// 							}
+	// 						}
+	// 						break;
+							
+	// 						case SDLK_0:
+	// 						//Stop the music
+	// 						Mix_HaltMusic();
+	// 						break;
+	// 					}
+	// 				}
+	// 			}
+
+    // Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024);
+
+    // std::string resPath = "res";
+    // std::string filePath = "";
+    // filePath = resPath + PATH_SEP + "bmusic.wav";
+
+    // Mix_Music* music = Mix_LoadMUS(filePath.c_str());
+
+    // if (!music)
+    //     printf("Mix_LoadMUS(\"bmusic.wav\"): %s\n", Mix_GetError());
+
+    // Mix_PlayMusic(music, -1);
+    // Mix_FreeMusic(music);
+}
+
+void Window::updateWindow(std::string newTitle ){
+    SDL_SetWindowTitle(window,newTitle.c_str());
 }
 
 void Window::cleanupAndExit()

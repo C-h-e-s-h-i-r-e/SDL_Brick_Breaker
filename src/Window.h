@@ -40,6 +40,8 @@ class Window
 
         void renderCenteredText(const std::string& msg, int yPos, SDL_Color color, int size, int renderType, SDL_Color stroke);
 
+        void updateWindow(std::string newTitle );
+
         void clear() { SDL_RenderClear(renderer); }
 
         void render() { SDL_RenderPresent(renderer); }
@@ -47,6 +49,7 @@ class Window
         int getWidth() { return width; }
         int getHeight() { return height; }
         int getMaxFps() { return maxFps; }
+        
 
     private:
         SDL_Window* window;
