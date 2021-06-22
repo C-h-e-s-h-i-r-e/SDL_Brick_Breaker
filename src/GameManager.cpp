@@ -27,8 +27,6 @@ GameManager::GameManager(Window* window):
 
     ball = new Ball(window, "ball.png", window->getWidth() / 2, window->getHeight() / 2, paddle);
 
-    //shared_ptr
-
     currentLevel = 1;
     bricksLeft = 0;
     maxBricks = 0;
@@ -93,6 +91,9 @@ void GameManager::initGame(bool fresh)
     } 
 
     LevelLoader* loader = new LevelLoader(this);
+
+
+    // wedle polecenia nie uzywac switch przy przeskakiwaniu przez poziomy
 
     // switch (currentLevel)
     // {
