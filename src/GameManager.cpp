@@ -19,9 +19,15 @@ GameManager::GameManager(Window* window):
     bg2Texture = window->loadTexture("bg2.png");
     bgGameTexture = window->loadTexture("bg3.png");
 
+    volumeControllTexture = window->loadTexture("vc.png");
+    gameControllTexture = window->loadTexture("gc.png");
+    creatorTexture = window->loadTexture("creator.png");
+
     paddle = new Entity(window, "normal_paddle.png", 305, 490);
 
     ball = new Ball(window, "ball.png", window->getWidth() / 2, window->getHeight() / 2, paddle);
+
+    //shared_ptr
 
     currentLevel = 1;
     bricksLeft = 0;
@@ -87,6 +93,7 @@ void GameManager::initGame(bool fresh)
     } 
 
     LevelLoader* loader = new LevelLoader(this);
+
     switch (currentLevel)
     {
         case 1:
@@ -152,22 +159,22 @@ void GameManager::runGame()
         }
         case STATE_VOLUME:
         {
-            window->renderTexture(bgTexture, 0, 0);
-            printLevels();
+            window->renderTexture(volumeControllTexture, 0, 0);
+            printVolume();
             listenForQuit();
             break;
         }
         case STATE_HOWTOPLAY:
         {
-            window->renderTexture(bg2Texture, 0, 0);
-            printHow();
+            window->renderTexture(gameControllTexture, 0, 0);
+            //printHow();
             listenForQuit();
             break;
         }
-        case STATE_CREDITS:
+        case STATE_CREATOR:
         {
-            window->renderTexture(bg2Texture, 0, 0);
-            printC();
+            window->renderTexture(creatorTexture, 0, 0);
+            //printC();
             listenForQuit();
             break;
         }
@@ -424,14 +431,14 @@ void GameManager::setState(int state)
     currentState = state;
 }
 
-void GameManager::printLevels()
+void GameManager::printVolume()
 {
 
-    window->renderCenteredText(" Music Volume Controll ", 50, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" ----- ", 175, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" Press '9' to 'Pause' or 'Play' ", 250, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" Press '0' to 'Stop' ", 325, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
-    window->renderCenteredText(" Press '-' and '+' to change volume ", 400, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+    //window->renderCenteredText(" Music Volume Controll ", 50, { 0, 0, 0 }, 50, FONT_RENDER_SHADED, {240, 240, 240});
+    //window->renderCenteredText(" ----- ", 175, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+    //window->renderCenteredText(" Press '9' to 'Pause' or 'Play' ", 250, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+    //window->renderCenteredText(" Press '0' to 'Stop' ", 325, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
+    //window->renderCenteredText(" Press '-' and '+' to change volume ", 400, { 0, 0, 0 }, 35, FONT_RENDER_SHADED, {240, 240, 240});
 
             std::string resPath = "res";
     std::string filePath = "";

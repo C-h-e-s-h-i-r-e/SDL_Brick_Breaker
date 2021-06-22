@@ -8,7 +8,7 @@ CXXFLAGS = -std=c++11 -Wall -g
 LDFLAGS = -lSDL2 -lGL -lGLEW -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lSDL2_image
 
 # Makefile settings - Can be customized.
-APPNAME = myapp
+APPNAME = BB
 EXT = .cpp
 SRCDIR = src
 OBJDIR = obj

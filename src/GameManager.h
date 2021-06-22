@@ -15,7 +15,7 @@ enum GameState
     STATE_PLAYING = 1,
     STATE_WINNER = 2,
     STATE_HOWTOPLAY = 3,
-    STATE_CREDITS = 4,
+    STATE_CREATOR = 4,
     STATE_VOLUME = 5
 };
 
@@ -37,7 +37,7 @@ class GameManager
 
         void listenForQuit();
 
-        void printLevels();
+        void printVolume();
 
         void printC();
 
@@ -56,6 +56,10 @@ class GameManager
         SDL_Texture* bgTexture;
         SDL_Texture* bg2Texture;
         SDL_Texture* bgGameTexture;
+
+        SDL_Texture* volumeControllTexture;
+        SDL_Texture* gameControllTexture;
+        SDL_Texture* creatorTexture;
 
         Mix_Chunk* ballHitSound = NULL;
         Mix_Chunk* brickBreakSound = NULL;

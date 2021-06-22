@@ -37,7 +37,7 @@ void Menu::tick()
                     manager->setState(STATE_HOWTOPLAY);
                     break;
                 case 3:
-                    manager->setState(STATE_CREDITS);
+                    manager->setState(STATE_CREATOR);
                     break;
                 case 4:
                     manager->quit();
