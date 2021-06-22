@@ -94,31 +94,50 @@ void GameManager::initGame(bool fresh)
 
     LevelLoader* loader = new LevelLoader(this);
 
-    switch (currentLevel)
-    {
-        case 1:
-            loader->openMap("lvl1.txt", maxBricks);
+    // switch (currentLevel)
+    // {
+    //     case 1:
+    //         loader->openMap("lvl1.txt", maxBricks);
 
-            break;
-        case 2:
-            loader->openMap("lvl2.txt", maxBricks);
+    //         break;
+    //     case 2:
+    //         loader->openMap("lvl2.txt", maxBricks);
 
-            break;
-        case 3:
-            loader->openMap("lvl3.txt", maxBricks);
+    //         break;
+    //     case 3:
+    //         loader->openMap("lvl3.txt", maxBricks);
 
-            break;
-        case 4:
-            loader->openMap("lvl4.txt", maxBricks);
+    //         break;
+    //     case 4:
+    //         loader->openMap("lvl4.txt", maxBricks);
 
-            break;
-        case 5:
-            loader->openMap("lvl5.txt", maxBricks);
+    //         break;
+    //     case 5:
+    //         loader->openMap("lvl5.txt", maxBricks);
 
-            break;
-        default:
-            currentState = STATE_WINNER;
-            break;
+    //         break;
+    //     default:
+    //         currentState = STATE_WINNER;
+    //         break;
+    // }
+
+    if(currentLevel == 1){
+        loader->openMap("lvl1.txt", maxBricks);
+    }
+    else if(currentLevel == 2){
+        loader->openMap("lvl2.txt", maxBricks);
+    }
+    else if(currentLevel == 3){
+        loader->openMap("lvl3.txt", maxBricks);
+    }
+    else if(currentLevel == 4){
+        loader->openMap("lvl4.txt", maxBricks);
+    }
+    else if(currentLevel == 5){
+        loader->openMap("lvl5.txt", maxBricks);
+    }
+    else{
+        currentState = STATE_WINNER;
     }
 
     if (currentState == STATE_PLAYING)
